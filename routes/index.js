@@ -2,6 +2,7 @@ const express = require("express");
 const package = require("../package.json");
 const router = express.Router();
 const yup = require("yup");
+const {validations} = require('../middleware')
 
 router.get("/health", function (req, res, next) {
   const { name, version } = package;
@@ -11,9 +12,9 @@ router.get("/health", function (req, res, next) {
   });
 });
 
-router.post("/api/v1/validations", function (req, res, next) {
+
+router.post("/api/v1/product/create", validations, function (req, res, next) {
   let isValid = false;
-  let messageError = [];
   const { id, name, status, califications, price } = req.body;
 
   let schema = yup.object().shape({
