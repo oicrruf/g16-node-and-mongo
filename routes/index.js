@@ -13,6 +13,7 @@ router.get("/health", function (req, res, next) {
 
 router.post("/api/v1/validations", function (req, res, next) {
   let isValid = false;
+  let messageError = [];
   const { id, name, status, califications, price } = req.body;
 
   let schema = yup.object().shape({
@@ -24,20 +25,19 @@ router.post("/api/v1/validations", function (req, res, next) {
   });
 
   schema
-    .isValid({ id, name, status, califications, price })
+    .validate({ id, name, status, califications, price })
     .then(function (valid) {
       isValid = valid;
+    })
+    .catch((err) => {
+      res.send({
+        type: err.name,
+        message: err.errors[0],
+      });
     });
-  // schema
-  //   .isValid({ id, name, status, califications, price })
-  //   .catch(function (err) {
-  //     console.log(err.name);
-  //   });
 
   if (isValid) {
     res.send({ id, name, status, califications, price });
-  } else {
-    res.send({ message: "error" });
   }
 });
 
