@@ -1,6 +1,6 @@
 const yup = require('yup')
 
-const validations = (req, res, next) => {
+const validationsProducts = (req, res, next) => {
   let isValid = false
   let message = ''
 
@@ -103,4 +103,4 @@ const validations = (req, res, next) => {
     })
 }
 
-module.exports = { validations }
+module.exports = { validationsProducts }
