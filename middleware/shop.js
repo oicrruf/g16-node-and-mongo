@@ -11,7 +11,7 @@ const validationsShop = (req, res, next) => {
     description,
     invoice_url,
     online,
-    adress,
+    address,
     phone_number,
     contact_email
   } = req.body
@@ -22,9 +22,9 @@ const validationsShop = (req, res, next) => {
     description: yup.string().required(),
     invoice_url: yup.string().required(),
     online: yup.boolean().required(),
-    adress: yup.string().required(),
-    phone_number: yup.string().required().matches(phoneRegExp).min(10).max(10),
-    contact_email: yup.string().email().required()
+    address: yup.string().required(),
+    phone_number: yup.string().required().matches(phoneRegExp).min(10).max(10),  
+    contact_email: yup.string().required()
   })
 
   schema
@@ -34,7 +34,7 @@ const validationsShop = (req, res, next) => {
       description,
       invoice_url,
       online,
-      adress,
+      address,
       phone_number,
       contact_email
     })
@@ -47,13 +47,13 @@ const validationsShop = (req, res, next) => {
       if (isValid) {
         res.send({
           id,
-        name,
-        description,
-        invoice_url,
-        online,
-        adress,
-        phone_number,
-        contact_email
+          name,
+          description,
+          invoice_url,
+          online,
+          address,
+          phone_number,
+          contact_email
         })
         next()
       } else {

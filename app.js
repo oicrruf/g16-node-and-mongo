@@ -6,6 +6,7 @@ const logger = require('morgan')
 const { default: mongoose } = require('mongoose')
 
 const indexRouter = require('./routes/index')
+const shopRouter = require('./routes/shop')
 
 require('dotenv').config()
 const app = express()
@@ -22,6 +23,7 @@ mongoose
   .catch((err) => console.log(err))
 
 app.use('/', indexRouter)
+app.use('/api/v1/shop', shopRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -36,7 +38,7 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500)
-  res.render('error')
+  res.send('error')
 })
 
 module.exports = app
