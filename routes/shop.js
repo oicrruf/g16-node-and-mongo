@@ -1,9 +1,9 @@
 const express = require('express')
 const router = express.Router()
-const { validations } = require('../middleware/product')
+const { validationsShop } = require('../middleware/shop')
 
-// product/create
-router.post('/api/v1/shop/create', validations, function (req, res, next) {
+// shop/create
+router.post('/create', validationsShop, function (req, res, next) {
   res.send(res.body)
 })
 
