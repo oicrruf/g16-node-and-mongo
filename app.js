@@ -5,8 +5,7 @@ const cookieParser = require('cookie-parser')
 const logger = require('morgan')
 const { default: mongoose } = require('mongoose')
 
-const indexRouter = require('./routes/index')
-const shopRouter = require('./routes/shop')
+const {health, purchaseReason} = require('./routes')
 
 require('dotenv').config()
 const app = express()
@@ -22,8 +21,8 @@ mongoose
   .then(() => console.log('Database connected 🤙'))
   .catch((err) => console.log(err))
 
-app.use('/', indexRouter)
-app.use('/api/v1/shop', shopRouter)
+app.use('/', health)
+app.use('/api/v1/purchase-reason', purchaseReason)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

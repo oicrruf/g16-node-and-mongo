@@ -1,24 +1,17 @@
-const express = require("express");
-const packageJSN = require("../package.json");
-const router = express.Router();
-const { validationsProducts } = require("../middleware/product");
+const health = require("./health");
+const brand = require("./brand");
+const origin = require("./origin");
+const product = require("./product");
+const purchaseReason = require("./purchase-reason");
+const shop = require("./shop");
+const user = require("./user");
 
-/* GET home page. */
-router.get("/health", function (req, res, next) {
-  const { name, version } = packageJSN;
-  res.send({
-    name,
-    version,
-  });
-});
-
-// product/create
-router.post(
-  "/api/v1/product/create",
-  validationsProducts,
-  function (req, res, next) {
-    res.send(res.body);
-  }
-);
-
-module.exports = router;
+module.exports = {
+  health,
+  brand,
+  origin,
+  product,
+  purchaseReason,
+  shop,
+  user,
+};
