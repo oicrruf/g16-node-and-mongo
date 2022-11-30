@@ -8,7 +8,7 @@ const validationsPurchaseReason = (req, res, next) => {
   const { name } = req.body;
 
   const schema = yup.object().shape({
-    name: yup.string().required(),
+    name: yup.string().required().strict(),
   });
 
   schema
@@ -31,7 +31,6 @@ const validationsPurchaseReason = (req, res, next) => {
             message: message.errors[0],
           },
         });
-        next();
       }
     });
 };
