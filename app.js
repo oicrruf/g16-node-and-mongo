@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser')
 const logger = require('morgan')
 const { default: mongoose } = require('mongoose')
 
-const {health, purchaseReason, brand} = require('./routes')
+const {health, purchaseReason, brand, origin} = require('./routes')
 
 require('dotenv').config()
 const app = express()
@@ -24,6 +24,7 @@ mongoose
 app.use('/', health)
 app.use('/api/v1/purchase-reason', purchaseReason)
 app.use('/api/v1/brand', brand)
+app.use('/api/v1/origin', origin)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
