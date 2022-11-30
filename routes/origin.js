@@ -3,11 +3,11 @@ const router = express.Router()
 const { validationsOrigin } = require('../middleware/origin')
 const { Origin } = require("../model");
 
-// origin/create
 router.get("/", function (req, res, next) {
   res.status(200).send(["Origin"]);
 });
 
+// origin/create
 router.post("/", validationsOrigin, function (req, res, next) {
   let origin = new Origin()
   origin.name = req.body.name
