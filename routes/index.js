@@ -13,5 +13,5 @@ module.exports = {
   product,
   purchaseReason,
   shop,
-  user,
+  user
 };
