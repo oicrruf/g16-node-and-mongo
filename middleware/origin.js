@@ -5,18 +5,15 @@ const validationsOrigin = (req, res, next) => {
   let message = ''
 
   const {
-    id,
     name
   } = req.body
 
   const schema = yup.object().shape({
-    id: yup.number().required(),
-    name: yup.string().required
+    name: yup.string().required().strict()
   })
 
   schema
     .validate({
-      id,
       name
     })
     .then(function (valid) {
@@ -26,10 +23,6 @@ const validationsOrigin = (req, res, next) => {
     })
     .then(() => {
       if (isValid) {
-        res.send({
-          id,
-          name
-        })
         next()
       } else {
         res.send({
@@ -38,7 +31,6 @@ const validationsOrigin = (req, res, next) => {
             message: message.errors[0]
           }
         })
-        next()
       }
     })
 }

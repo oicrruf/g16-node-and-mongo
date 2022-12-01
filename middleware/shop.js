@@ -6,7 +6,6 @@ const validationsShop = (req, res, next) => {
   let message = ''
 
   const {
-    id,
     name,
     description,
     invoice_url,
@@ -17,19 +16,17 @@ const validationsShop = (req, res, next) => {
   } = req.body
 
   const schema = yup.object().shape({
-    id: yup.number().required(),
-    name: yup.string().required,
-    description: yup.string().required(),
-    invoice_url: yup.string().required(),
+    name: yup.string().required().strict(),
+    description: yup.string().required().strict(),
+    invoice_url: yup.string().required().strict(),
     online: yup.boolean().required(),
-    address: yup.string().required(),
+    address: yup.string().required().strict(),
     phone_number: yup.string().required().matches(phoneRegExp).min(10).max(10),  
-    contact_email: yup.string().required()
+    contact_email: yup.string().email().required().strict()
   })
 
   schema
     .validate({
-      id,
       name,
       description,
       invoice_url,
@@ -45,16 +42,6 @@ const validationsShop = (req, res, next) => {
     })
     .then(() => {
       if (isValid) {
-        res.send({
-          id,
-          name,
-          description,
-          invoice_url,
-          online,
-          address,
-          phone_number,
-          contact_email
-        })
         next()
       } else {
         res.send({
@@ -63,7 +50,6 @@ const validationsShop = (req, res, next) => {
             message: message.errors[0]
           }
         })
-        next()
       }
     })
 }

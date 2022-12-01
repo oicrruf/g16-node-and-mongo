@@ -5,31 +5,28 @@ const validationsUser = (req, res, next) => {
   let message = ''
 
   const {
-    id,
     first_name,
     last_name,
     email,
     password,
-    gender_id
+    gender
   } = req.body
 
   const schema = yup.object().shape({
-    id: yup.number().required(),
-    first_name: yup.string().required(),
-    last_name: yup.string().required(),
-    email: yup.string().email().required(),
-    password: yup.string().required().min(8).matches([a-zA-Z]),
-    gender_id: yup.number().required()
+    first_name: yup.string().required().strict(),
+    last_name: yup.string().required().strict(),
+    email: yup.string().email().required().strict(),
+    password: yup.string().required().matches(/[a-zA-Z]/).min(8).strict(),
+    gender: yup.string().lowercase().oneOf(['masculino', 'femenino', 'otro']).required()
   })
 
   schema
     .validate({
-        id,
-        first_name,
-        last_name,
-        email,
-        password,
-        gender_id
+      first_name,
+      last_name,
+      email,
+      password,
+      gender
     })
     .then(function (valid) {
       isValid = valid
@@ -38,14 +35,6 @@ const validationsUser = (req, res, next) => {
     })
     .then(() => {
       if (isValid) {
-        res.send({
-            id,
-            first_name,
-            last_name,
-            email,
-            password,
-            gender_id
-        })
         next()
       } else {
         res.send({
@@ -54,7 +43,6 @@ const validationsUser = (req, res, next) => {
             message: message.errors[0]
           }
         })
-        next()
       }
     })
 }

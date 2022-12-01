@@ -7,7 +7,7 @@ router.get("/", function (req, res, next) {
   res.status(200).send(["Purchase reason"]);
 });
 
-// product/create
+// purchaseReason/create
 router.post("/", validationsPurchaseReason, function (req, res, next) {
   let purchase_reason = new PurchaseReason();
   purchase_reason.name = req.body.name;
@@ -20,7 +20,6 @@ router.post("/", validationsPurchaseReason, function (req, res, next) {
     res.status(201).send({ ["purchase_reason"]: purchaseReasonStored });
   });
 
-  // res.send(res.body);
 });
 
 module.exports = router;

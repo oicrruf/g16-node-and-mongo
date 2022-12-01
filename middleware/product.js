@@ -5,7 +5,6 @@ const validationsProducts = (req, res, next) => {
   let message = ''
 
   const {
-    id,
     name,
     brand,
     price,
@@ -25,15 +24,14 @@ const validationsProducts = (req, res, next) => {
   } = req.body
 
   const schema = yup.object().shape({
-    id: yup.number().required(),
-    name: yup.string().required(),
-    brand: yup.string().required(),
+    name: yup.string().required().strict(),
+    brand: yup.string().required().strict(),
     price: yup.number().required().positive(),
     purchase_date: yup.date().required(),
-    purchase_reason: yup.string().required(),
-    origin: yup.string().lowercase().oneOf(['work', 'gift']).required(),
-    shop: yup.string().required(),
-    status: yup.string().required(),
+    purchase_reason: yup.string().required().strict(),
+    origin: yup.string().lowercase().oneOf(['work', 'gift']).required().strict(),
+    shop: yup.string().required().strict(),
+    status: yup.string().required().strict(),
     lifespan: yup.number().required().positive(),
     depreciation: yup.number().required().positive(),
     depreciation_value: yup.number().required().positive(),
@@ -46,7 +44,6 @@ const validationsProducts = (req, res, next) => {
 
   schema
     .validate({
-      id,
       name,
       brand,
       price,
@@ -71,25 +68,6 @@ const validationsProducts = (req, res, next) => {
     })
     .then(() => {
       if (isValid) {
-        res.send({
-          id,
-          name,
-          brand,
-          price,
-          purchase_date,
-          purchase_reason,
-          origin,
-          shop,
-          status,
-          lifespan,
-          depreciation,
-          depreciation_value,
-          maintenance,
-          warranty,
-          score,
-          in_sale,
-          sale_date
-        })
         next()
       } else {
         res.send({
@@ -98,7 +76,6 @@ const validationsProducts = (req, res, next) => {
             message: message.errors[0]
           }
         })
-        next()
       }
     })
 }
