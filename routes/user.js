@@ -3,8 +3,24 @@ const router = express.Router()
 const { validationsUser } = require('../middleware/user')
 const { User } = require("../model");
 
-router.get("/", function (req, res, next) {
-  res.status(200).send(["User"]);
+router.get("/find", function (req, res, next) {
+  User.find({ name: req.query.name }, function (err, docs) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.status(200).send({ data: docs });
+    }
+  });
+});
+
+router.get("/:id", function (req, res, next) {
+  User.findById({ _id: req.params.id }, function (err, docs) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.status(200).send({ data: docs });
+    }
+  });
 });
 
 // user/create
