@@ -1,9 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const { validationsPurchaseReason } = require("../middleware/purchase-reason");
+const {
+  validationsCreatePurchaseReason,
+  validationsFindByNamePurchaseReason,
+} = require("../middleware/purchase-reason");
+
 const { PurchaseReason } = require("../model");
 
-router.get("/find", function (req, res, next) {
+router.get("/find", validationsFindByNamePurchaseReason, function (req, res, next) {
   PurchaseReason.find({ name: req.query.name }, function (err, docs) {
     if (err) {
       console.log(err);
@@ -16,7 +20,7 @@ router.get("/find", function (req, res, next) {
 router.get("/:id", function (req, res, next) {
   PurchaseReason.findById({ _id: req.params.id }, function (err, docs) {
     if (err) {
-      console.log(err);
+      res.status(404).send({name: err.name, message: err.message});
     } else {
       res.status(200).send({ data: docs });
     }
@@ -24,7 +28,7 @@ router.get("/:id", function (req, res, next) {
 });
 
 // purchaseReason/create
-router.post("/", validationsPurchaseReason, function (req, res, next) {
+router.post("/", validationsCreatePurchaseReason, function (req, res, next) {
   let purchase_reason = new PurchaseReason();
   purchase_reason.name = req.body.name;
 
