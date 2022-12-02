@@ -1,31 +1,16 @@
 const express = require("express");
 const router = express.Router();
-const { validationsProducts } = require("../middleware/product");
+const {
+  validationsCreateProduct,
+  validationsFindByNameProduct,
+} = require("../middleware/product");
+
 const { Product } = require("../model");
 
-router.get("/find", function (req, res, next) {
-  Product.find({ name: req.query.name }, function (err, docs) {
-    if (err) {
-      console.log(err);
-    } else {
-      res.status(200).send({ data: docs });
-    }
-  });
-});
+// Create
 
-router.get("/:id", function (req, res, next) {
-  Product.findById({ _id: req.params.id }, function (err, docs) {
-    if (err) {
-      console.log(err);
-    } else {
-      res.status(200).send({ data: docs });
-    }
-  });
-});
-
-// product/create
-router.post("/", validationsProducts, function (req, res, next) {
-  let product = new Product()
+router.post("/", validationsCreateProduct, function (req, res, next) {
+  let product = new Product();
   product.name = req.body.name
   product.brand = req.body.brand
   product.price = req.body.price
@@ -43,13 +28,81 @@ router.post("/", validationsProducts, function (req, res, next) {
   product.in_sale = req.body.in_sale
   product.sale_date = req.body.sale_date
 
-  product.save((error, productStored) => {
-    if (error) {
-      res.status(500).send({ message: error })
-    }
 
-    res.status(201).send({ ["product"]: productStored})
-  })
-})
+  Product.save((error, productStored) => {
+    if (error) {
+      res.status(500).send({ message: error });
+    }
+    res.status(201).send(productStored);
+  });
+});
+
+// Find by id
+router.get("/:id", function (req, res, next) {
+  Product.findById({ _id: req.params.id }, function (err, docs) {
+    if (err) {
+      res.status(404).send({ name: err.name, message: err.message });
+    } else {
+      res.status(200).send({ data: docs });
+    }
+  });
+});
+
+// Find by name
+router.get(
+  "/find",
+  validationsFindByNameProduct,
+  function (req, res, next) {
+    Product.find({ name: req.query.name }, function (err, docs) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.status(200).send({ data: docs });
+      }
+    });
+  }
+);
+
+// Find all
+router.get("/find/all", function (req, res, next) {
+  Product.find({}, function (err, docs) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.status(200).send({ data: docs });
+    }
+  });
+});
+
+// Update
+router.patch("/update", function (req, res, next) {
+  let key = Object.keys(req.query)[0];
+  Product.findOneAndUpdate(
+    { [key]: req.query[key] }, // Valor buscado
+    { [key]: req.body.value }, // Nuevo valor
+    function (err, docs) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.status(200).send({ data: docs });
+      }
+    }
+  );
+});
+
+// Delete by id 
+router.delete("/:id", function (req, res, next) {
+  Product.deleteOne(
+    { _id: req.params.id },
+
+    function (err, docs) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.status(200).send({ data: docs });
+      }
+    }
+  );
+});
 
 module.exports = router;
