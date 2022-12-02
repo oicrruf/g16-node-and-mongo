@@ -3,8 +3,24 @@ const router = express.Router()
 const { validationsOrigin } = require('../middleware/origin')
 const { Origin } = require("../model");
 
-router.get("/", function (req, res, next) {
-  res.status(200).send(["Origin"]);
+router.get("/find", function (req, res, next) {
+  Origin.find({ name: req.query.name }, function (err, docs) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.status(200).send({ data: docs });
+    }
+  });
+});
+
+router.get("/:id", function (req, res, next) {
+  Origin.findById({ _id: req.params.id }, function (err, docs) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.status(200).send({ data: docs });
+    }
+  });
 });
 
 // origin/create

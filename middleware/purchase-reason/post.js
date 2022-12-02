@@ -1,6 +1,6 @@
 const yup = require("yup");
 
-const validationsPurchaseReason = (req, res, next) => {
+const validationsCreatePurchaseReason = (req, res, next) => {
   
   let isValid = false;
   let message = "";
@@ -35,4 +35,4 @@ const validationsPurchaseReason = (req, res, next) => {
     });
 };
 
-module.exports = { validationsPurchaseReason };
+module.exports = { validationsCreatePurchaseReason };

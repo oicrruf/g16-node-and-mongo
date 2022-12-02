@@ -3,8 +3,24 @@ const router = express.Router();
 const { validationsProducts } = require("../middleware/product");
 const { Product } = require("../model");
 
-router.get("/", function (req, res, next) {
-  res.status(200).send(["Product"]);
+router.get("/find", function (req, res, next) {
+  Product.find({ name: req.query.name }, function (err, docs) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.status(200).send({ data: docs });
+    }
+  });
+});
+
+router.get("/:id", function (req, res, next) {
+  Product.findById({ _id: req.params.id }, function (err, docs) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.status(200).send({ data: docs });
+    }
+  });
 });
 
 // product/create
