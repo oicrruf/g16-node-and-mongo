@@ -1,8 +1,9 @@
-const yup = require('yup')
+const yup = require("yup");
 
-const validationsProducts = (req, res, next) => {
-  let isValid = false
-  let message = ''
+const validationsCreateProduct = (req, res, next) => {
+  
+  let isValid = false;
+  let message = "";
 
   const {
     name,
@@ -21,7 +22,7 @@ const validationsProducts = (req, res, next) => {
     score,
     in_sale,
     sale_date
-  } = req.body
+  } = req.body;
 
   const schema = yup.object().shape({
     name: yup.string().required().strict(),
@@ -40,44 +41,45 @@ const validationsProducts = (req, res, next) => {
     score: yup.number().required().min(1).max(5),
     in_sale: yup.boolean().required(),
     sale_date: yup.date()
-  })
+  });
 
   schema
     .validate({
-      name,
-      brand,
-      price,
-      purchase_date,
-      purchase_reason,
-      origin,
-      shop,
-      status,
-      lifespan,
-      depreciation,
-      depreciation_value,
-      maintenance,
-      warranty,
-      score,
-      in_sale,
-      sale_date
+        name,
+        brand,
+        price,
+        purchase_date,
+        purchase_reason,
+        origin,
+        shop,
+        status,
+        lifespan,
+        depreciation,
+        depreciation_value,
+        maintenance,
+        warranty,
+        score,
+        in_sale,
+        sale_date
     })
     .then(function (valid) {
-      isValid = valid
-    }).catch((err) => {
-      message = err
+      isValid = valid;
+    })
+    .catch((err) => {
+      message = err;
     })
     .then(() => {
       if (isValid) {
-        next()
+       next();
       } else {
         res.send({
           error: {
             type: message.name,
-            message: message.errors[0]
-          }
-        })
+            message: message.errors[0],
+          },
+        });
       }
-    })
-}
+    });
+};
 
-module.exports = { validationsProducts }
+module.exports = { validationsCreateProduct };
