@@ -8,7 +8,6 @@ const {
 const { Product } = require("../model");
 
 // Create
-
 router.post("/", validationsCreateProduct, function (req, res, next) {
   let product = new Product();
   product.name = req.body.name
