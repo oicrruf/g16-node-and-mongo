@@ -5,7 +5,7 @@ const { validationsShop } = require('../middleware/shop');
 const { Shop } = require('../model');
 
 // Create
-router.post('/', validationsShop, (req, res, next) => {
+router.post('/', validationsShop, (req, res) => {
   const shop = new Shop();
   shop.name = req.body.name;
   shop.description = req.body.description;
@@ -25,10 +25,10 @@ router.post('/', validationsShop, (req, res, next) => {
 });
 
 // Find by id
-router.get('/:id', (req, res, next) => {
+router.get('/:id', (req, res) => {
   Shop.findById({ _id: req.params.id }, (err, docs) => {
     if (err) {
-      console.log(err);
+      throw err;
     } else {
       res.status(200).send({ data: docs });
     }
@@ -36,10 +36,10 @@ router.get('/:id', (req, res, next) => {
 });
 
 // Find by name
-router.get('/find', (req, res, next) => {
+router.get('/find', (req, res) => {
   Shop.find({ name: req.query.name }, (err, docs) => {
     if (err) {
-      console.log(err);
+      throw err;
     } else {
       res.status(200).send({ data: docs });
     }
@@ -47,10 +47,10 @@ router.get('/find', (req, res, next) => {
 });
 
 // Find all
-router.get('/find/all', (req, res, next) => {
+router.get('/find/all', (req, res) => {
   Shop.find({}, (err, docs) => {
     if (err) {
-      console.log(err);
+      throw err;
     } else {
       res.status(200).send({ data: docs });
     }
@@ -58,14 +58,14 @@ router.get('/find/all', (req, res, next) => {
 });
 
 // Update
-router.patch('/update', (req, res, next) => {
+router.patch('/update', (req, res) => {
   const key = Object.keys(req.query)[0];
   Shop.findOneAndUpdate(
     { [key]: req.query[key] }, // Valor buscado
     { [key]: req.body.value }, // Nuevo valor
     (err, docs) => {
       if (err) {
-        console.log(err);
+        throw err;
       } else {
         res.status(200).send({ data: docs });
       }
@@ -74,13 +74,13 @@ router.patch('/update', (req, res, next) => {
 });
 
 // Delete by id
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id', (req, res) => {
   Shop.deleteOne(
     { _id: req.params.id },
 
     (err, docs) => {
       if (err) {
-        console.log(err);
+        throw err;
       } else {
         res.status(200).send({ data: docs });
       }
