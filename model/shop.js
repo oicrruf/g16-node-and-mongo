@@ -10,7 +10,6 @@ const ShopSchema = Schema(
     online: Boolean,
     address: String,
     phone_number: Number,
-    phone_number: Number,
     contact_email: String,
   },
   {
