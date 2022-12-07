@@ -1,10 +1,10 @@
-const health = require("./health");
-const brand = require("./brand");
-const origin = require("./origin");
-const product = require("./product");
-const purchaseReason = require("./purchase-reason");
-const shop = require("./shop");
-const user = require("./user");
+const health = require('./health');
+const brand = require('./brand');
+const origin = require('./origin');
+const product = require('./product');
+const purchaseReason = require('./purchase-reason');
+const shop = require('./shop');
+const user = require('./user');
 
 module.exports = {
   health,
@@ -13,5 +13,5 @@ module.exports = {
   product,
   purchaseReason,
   shop,
-  user
+  user,
 };

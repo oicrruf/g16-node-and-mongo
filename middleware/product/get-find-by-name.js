@@ -1,9 +1,8 @@
-const yup = require("yup");
+const yup = require('yup');
 
 const validationsFindByNameProduct = (req, res, next) => {
-  
   let isValid = false;
-  let message = "";
+  let message = '';
 
   const {
     name,
@@ -21,7 +20,7 @@ const validationsFindByNameProduct = (req, res, next) => {
     warranty,
     score,
     in_sale,
-    sale_date
+    sale_date,
   } = req.query;
 
   const schema = yup.object().shape({
@@ -30,7 +29,12 @@ const validationsFindByNameProduct = (req, res, next) => {
     price: yup.number().required().positive(),
     purchase_date: yup.date().required(),
     purchase_reason: yup.string().required().strict(),
-    origin: yup.string().lowercase().oneOf(['work', 'gift']).required().strict(),
+    origin: yup
+      .string()
+      .lowercase()
+      .oneOf(['work', 'gift'])
+      .required()
+      .strict(),
     shop: yup.string().required().strict(),
     status: yup.string().required().strict(),
     lifespan: yup.number().required().positive(),
@@ -40,27 +44,27 @@ const validationsFindByNameProduct = (req, res, next) => {
     warranty: yup.number().required().positive(),
     score: yup.number().required().min(1).max(5),
     in_sale: yup.boolean().required(),
-    sale_date: yup.date()
+    sale_date: yup.date(),
   });
 
   schema
     .validate({
-        name,
-        brand,
-        price,
-        purchase_date,
-        purchase_reason,
-        origin,
-        shop,
-        status,
-        lifespan,
-        depreciation,
-        depreciation_value,
-        maintenance,
-        warranty,
-        score,
-        in_sale,
-        sale_date
+      name,
+      brand,
+      price,
+      purchase_date,
+      purchase_reason,
+      origin,
+      shop,
+      status,
+      lifespan,
+      depreciation,
+      depreciation_value,
+      maintenance,
+      warranty,
+      score,
+      in_sale,
+      sale_date,
     })
     .then(function (valid) {
       isValid = valid;
@@ -70,7 +74,7 @@ const validationsFindByNameProduct = (req, res, next) => {
     })
     .then(() => {
       if (isValid) {
-       next();
+        next();
       } else {
         res.send({
           error: {

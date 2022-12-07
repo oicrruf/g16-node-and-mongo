@@ -1,9 +1,10 @@
-const yup = require('yup')
-const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+const yup = require('yup');
+const phoneRegExp =
+  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
 const validationsShop = (req, res, next) => {
-  let isValid = false
-  let message = ''
+  let isValid = false;
+  let message = '';
 
   const {
     name,
@@ -12,8 +13,8 @@ const validationsShop = (req, res, next) => {
     online,
     address,
     phone_number,
-    contact_email
-  } = req.body
+    contact_email,
+  } = req.body;
 
   const schema = yup.object().shape({
     name: yup.string().required().strict(),
@@ -21,9 +22,9 @@ const validationsShop = (req, res, next) => {
     invoice_url: yup.string().required().strict(),
     online: yup.boolean().required(),
     address: yup.string().required().strict(),
-    phone_number: yup.string().required().matches(phoneRegExp).min(10).max(10),  
-    contact_email: yup.string().email().required().strict()
-  })
+    phone_number: yup.string().required().matches(phoneRegExp).min(10).max(10),
+    contact_email: yup.string().email().required().strict(),
+  });
 
   schema
     .validate({
@@ -33,25 +34,26 @@ const validationsShop = (req, res, next) => {
       online,
       address,
       phone_number,
-      contact_email
+      contact_email,
     })
     .then(function (valid) {
-      isValid = valid
-    }).catch((err) => {
-      message = err
+      isValid = valid;
+    })
+    .catch((err) => {
+      message = err;
     })
     .then(() => {
       if (isValid) {
-        next()
+        next();
       } else {
         res.send({
           error: {
             type: message.name,
-            message: message.errors[0]
-          }
-        })
+            message: message.errors[0],
+          },
+        });
       }
-    })
-}
+    });
+};
 
-module.exports = { validationsShop }
+module.exports = { validationsShop };

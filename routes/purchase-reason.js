@@ -1,14 +1,14 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 const {
   validationsCreatePurchaseReason,
   validationsFindByNamePurchaseReason,
-} = require("../middleware/purchase-reason");
+} = require('../middleware/purchase-reason');
 
-const { PurchaseReason } = require("../model");
+const { PurchaseReason } = require('../model');
 
 // Create
-router.post("/", validationsCreatePurchaseReason, function (req, res, next) {
+router.post('/', validationsCreatePurchaseReason, function (req, res, next) {
   let purchase_reason = new PurchaseReason();
   purchase_reason.name = req.body.name;
 
@@ -21,7 +21,7 @@ router.post("/", validationsCreatePurchaseReason, function (req, res, next) {
 });
 
 // Find by id
-router.get("/:id", function (req, res, next) {
+router.get('/:id', function (req, res, next) {
   PurchaseReason.findById({ _id: req.params.id }, function (err, docs) {
     if (err) {
       res.status(404).send({ name: err.name, message: err.message });
@@ -33,7 +33,7 @@ router.get("/:id", function (req, res, next) {
 
 // Find by name
 router.get(
-  "/find",
+  '/find',
   validationsFindByNamePurchaseReason,
   function (req, res, next) {
     PurchaseReason.find({ name: req.query.name }, function (err, docs) {
@@ -47,7 +47,7 @@ router.get(
 );
 
 // Find all
-router.get("/find/all", function (req, res, next) {
+router.get('/find/all', function (req, res, next) {
   PurchaseReason.find({}, function (err, docs) {
     if (err) {
       console.log(err);
@@ -58,7 +58,7 @@ router.get("/find/all", function (req, res, next) {
 });
 
 // Update
-router.patch("/update", function (req, res, next) {
+router.patch('/update', function (req, res, next) {
   let key = Object.keys(req.query)[0];
   PurchaseReason.findOneAndUpdate(
     { [key]: req.query[key] }, // Valor buscado
@@ -73,8 +73,8 @@ router.patch("/update", function (req, res, next) {
   );
 });
 
-// Delete by id 
-router.delete("/:id", function (req, res, next) {
+// Delete by id
+router.delete('/:id', function (req, res, next) {
   PurchaseReason.deleteOne(
     { _id: req.params.id },
 

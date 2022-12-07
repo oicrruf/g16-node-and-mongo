@@ -1,9 +1,8 @@
-const yup = require("yup");
+const yup = require('yup');
 
 const validationsFindByNameBrand = (req, res, next) => {
-  
   let isValid = false;
-  let message = "";
+  let message = '';
 
   const { name } = req.query;
 
@@ -13,7 +12,7 @@ const validationsFindByNameBrand = (req, res, next) => {
 
   schema
     .validate({
-      name
+      name,
     })
     .then(function (valid) {
       isValid = valid;
@@ -23,7 +22,7 @@ const validationsFindByNameBrand = (req, res, next) => {
     })
     .then(() => {
       if (isValid) {
-       next();
+        next();
       } else {
         res.send({
           error: {

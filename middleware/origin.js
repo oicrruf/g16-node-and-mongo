@@ -1,38 +1,37 @@
-const yup = require('yup')
+const yup = require('yup');
 
 const validationsOrigin = (req, res, next) => {
-  let isValid = false
-  let message = ''
+  let isValid = false;
+  let message = '';
 
-  const {
-    name
-  } = req.body
+  const { name } = req.body;
 
   const schema = yup.object().shape({
-    name: yup.string().required().strict()
-  })
+    name: yup.string().required().strict(),
+  });
 
   schema
     .validate({
-      name
+      name,
     })
     .then(function (valid) {
-      isValid = valid
-    }).catch((err) => {
-      message = err
+      isValid = valid;
+    })
+    .catch((err) => {
+      message = err;
     })
     .then(() => {
       if (isValid) {
-        next()
+        next();
       } else {
         res.send({
           error: {
             type: message.name,
-            message: message.errors[0]
-          }
-        })
+            message: message.errors[0],
+          },
+        });
       }
-    })
-}
+    });
+};
 
-module.exports = { validationsOrigin }
+module.exports = { validationsOrigin };

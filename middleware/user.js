@@ -1,24 +1,27 @@
-const yup = require('yup')
+const yup = require('yup');
 
 const validationsUser = (req, res, next) => {
-  let isValid = false
-  let message = ''
+  let isValid = false;
+  let message = '';
 
-  const {
-    first_name,
-    last_name,
-    email,
-    password,
-    gender
-  } = req.body
+  const { first_name, last_name, email, password, gender } = req.body;
 
   const schema = yup.object().shape({
     first_name: yup.string().required().strict(),
     last_name: yup.string().required().strict(),
     email: yup.string().email().required().strict(),
-    password: yup.string().required().matches(/[a-zA-Z]/).min(8).strict(),
-    gender: yup.string().lowercase().oneOf(['masculino', 'femenino', 'otro']).required()
-  })
+    password: yup
+      .string()
+      .required()
+      .matches(/[a-zA-Z]/)
+      .min(8)
+      .strict(),
+    gender: yup
+      .string()
+      .lowercase()
+      .oneOf(['masculino', 'femenino', 'otro'])
+      .required(),
+  });
 
   schema
     .validate({
@@ -26,25 +29,26 @@ const validationsUser = (req, res, next) => {
       last_name,
       email,
       password,
-      gender
+      gender,
     })
     .then(function (valid) {
-      isValid = valid
-    }).catch((err) => {
-      message = err
+      isValid = valid;
+    })
+    .catch((err) => {
+      message = err;
     })
     .then(() => {
       if (isValid) {
-        next()
+        next();
       } else {
         res.send({
           error: {
             type: message.name,
-            message: message.errors[0]
-          }
-        })
+            message: message.errors[0],
+          },
+        });
       }
-    })
-}
+    });
+};
 
-module.exports = { validationsUser }
+module.exports = { validationsUser };
