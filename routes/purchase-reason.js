@@ -11,10 +11,10 @@ const { PurchaseReason } = require('../model');
 
 // Create
 router.post('/', validationsCreatePurchaseReason, (req, res) => {
-  const purchase_reason = new PurchaseReason();
-  purchase_reason.name = req.body.name;
+  const purchaseReason = new PurchaseReason();
+  purchaseReason.name = req.body.name;
 
-  purchase_reason.save((error, purchaseReasonStored) => {
+  purchaseReason.save((error, purchaseReasonStored) => {
     if (error) {
       res.status(500).send({ message: error });
     }

@@ -11,11 +11,11 @@ const validationsShop = (req, res, next) => {
   const {
     name,
     description,
-    invoice_url,
+    invoiceUrl,
     online,
     address,
-    phone_number,
-    contact_email,
+    phoneNumber,
+    contactEmail,
   } = req.body;
 
   const schema = yup.object().shape({
@@ -32,11 +32,11 @@ const validationsShop = (req, res, next) => {
     .validate({
       name,
       description,
-      invoice_url,
+      invoiceUrl,
       online,
       address,
-      phone_number,
-      contact_email,
+      phoneNumber,
+      contactEmail,
     })
     .then((valid) => {
       isValid = valid;

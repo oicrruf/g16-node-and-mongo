@@ -5,7 +5,7 @@ const validationsUser = (req, res, next) => {
   let isValid = false;
   let message = '';
 
-  const { first_name, last_name, email, password, gender } = req.body;
+  const { firstName, lastName, email, password, gender } = req.body;
 
   const schema = yup.object().shape({
     first_name: yup.string().required().strict(),
@@ -26,8 +26,8 @@ const validationsUser = (req, res, next) => {
 
   schema
     .validate({
-      first_name,
-      last_name,
+      firstName,
+      lastName,
       email,
       password,
       gender,
