@@ -1,4 +1,6 @@
+/* eslint-disable camelcase */
 const yup = require('yup');
+
 const phoneRegExp =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
@@ -36,7 +38,7 @@ const validationsShop = (req, res, next) => {
       phone_number,
       contact_email,
     })
-    .then(function (valid) {
+    .then((valid) => {
       isValid = valid;
     })
     .catch((err) => {
