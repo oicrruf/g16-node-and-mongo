@@ -9,9 +9,8 @@ const ShopSchema = Schema(
     invoice_url: String,
     online: Boolean,
     address: String,
-    phone_number: Number,
-    phone_number: Number,
-    contact_email: String,
+    phoneNumber: Number,
+    contactEmail: String,
   },
   {
     timestamps: {

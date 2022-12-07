@@ -2,10 +2,9 @@ const express = require('express');
 const packageJSN = require('../package.json');
 
 const router = express.Router();
-const { validationsProducts } = require('../middleware/product');
 
 /* GET home page. */
-router.get('/health', (req, res, next) => {
+router.get('/health', (res) => {
   const { name, version } = packageJSN;
   res.send({
     name,

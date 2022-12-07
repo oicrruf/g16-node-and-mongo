@@ -45,7 +45,7 @@ router.get('/find', (req, res) => {
 });
 
 // Find all
-router.get('/find/all', (req, res) => {
+router.get('/find/all', (res) => {
   User.find({}, (err, docs) => {
     if (err) {
       throw err;

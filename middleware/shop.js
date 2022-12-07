@@ -1,4 +1,5 @@
 const yup = require('yup');
+
 const phoneRegExp =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
@@ -9,11 +10,11 @@ const validationsShop = (req, res, next) => {
   const {
     name,
     description,
-    invoice_url,
+    invoiceUrl,
     online,
     address,
-    phone_number,
-    contact_email,
+    phoneNumber,
+    contactEmail,
   } = req.body;
 
   const schema = yup.object().shape({
@@ -30,13 +31,13 @@ const validationsShop = (req, res, next) => {
     .validate({
       name,
       description,
-      invoice_url,
+      invoiceUrl,
       online,
       address,
-      phone_number,
-      contact_email,
+      phoneNumber,
+      contactEmail,
     })
-    .then(function (valid) {
+    .then((valid) => {
       isValid = valid;
     })
     .catch((err) => {

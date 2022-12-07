@@ -9,11 +9,11 @@ const {
 const { PurchaseReason } = require('../model');
 
 // Create
-router.post('/', validationsCreatePurchaseReason, (req, res, next) => {
-  const purchase_reason = new PurchaseReason();
-  purchase_reason.name = req.body.name;
+router.post('/', validationsCreatePurchaseReason, (req, res) => {
+  const purchaseReason = new PurchaseReason();
+  purchaseReason.name = req.body.name;
 
-  purchase_reason.save((error, purchaseReasonStored) => {
+  purchaseReason.save((error, purchaseReasonStored) => {
     if (error) {
       res.status(500).send({ message: error });
     }
@@ -22,7 +22,7 @@ router.post('/', validationsCreatePurchaseReason, (req, res, next) => {
 });
 
 // Find by id
-router.get('/:id', (req, res, next) => {
+router.get('/:id', (req, res) => {
   PurchaseReason.findById({ _id: req.params.id }, (err, docs) => {
     if (err) {
       res.status(404).send({ name: err.name, message: err.message });
@@ -33,7 +33,7 @@ router.get('/:id', (req, res, next) => {
 });
 
 // Find by name
-router.get('/find', validationsFindByNamePurchaseReason, (req, res, next) => {
+router.get('/find', validationsFindByNamePurchaseReason, (req, res) => {
   PurchaseReason.find({ name: req.query.name }, (err, docs) => {
     if (err) {
       console.log(err);
@@ -44,7 +44,7 @@ router.get('/find', validationsFindByNamePurchaseReason, (req, res, next) => {
 });
 
 // Find all
-router.get('/find/all', (req, res, next) => {
+router.get('/find/all', (res) => {
   PurchaseReason.find({}, (err, docs) => {
     if (err) {
       console.log(err);
@@ -55,7 +55,7 @@ router.get('/find/all', (req, res, next) => {
 });
 
 // Update
-router.patch('/update', (req, res, next) => {
+router.patch('/update', (req, res) => {
   const key = Object.keys(req.query)[0];
   PurchaseReason.findOneAndUpdate(
     { [key]: req.query[key] }, // Valor buscado
@@ -71,7 +71,7 @@ router.patch('/update', (req, res, next) => {
 });
 
 // Delete by id
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id', (req, res) => {
   PurchaseReason.deleteOne(
     { _id: req.params.id },
 

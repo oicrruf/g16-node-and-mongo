@@ -5,7 +5,7 @@ const { validationsOrigin } = require('../middleware/origin');
 const { Origin } = require('../model');
 
 // Create
-router.post('/', validationsOrigin, (req, res, next) => {
+router.post('/', validationsOrigin, (req, res) => {
   const origin = new Origin();
   origin.name = req.body.name;
 
@@ -18,7 +18,7 @@ router.post('/', validationsOrigin, (req, res, next) => {
 });
 
 // Find by id
-router.get('/:id', (req, res, next) => {
+router.get('/:id', (req, res) => {
   Origin.findById({ _id: req.params.id }, (err, docs) => {
     if (err) {
       console.log(err);
@@ -29,7 +29,7 @@ router.get('/:id', (req, res, next) => {
 });
 
 // Find by name
-router.get('/find', (req, res, next) => {
+router.get('/find', (req, res) => {
   Origin.find({ name: req.query.name }, (err, docs) => {
     if (err) {
       console.log(err);
@@ -40,7 +40,7 @@ router.get('/find', (req, res, next) => {
 });
 
 // Find all
-router.get('/find/all', (req, res, next) => {
+router.get('/find/all', (res) => {
   Origin.find({}, (err, docs) => {
     if (err) {
       console.log(err);
@@ -51,7 +51,7 @@ router.get('/find/all', (req, res, next) => {
 });
 
 // Update
-router.patch('/update', (req, res, next) => {
+router.patch('/update', (req, res) => {
   const key = Object.keys(req.query)[0];
   Origin.findOneAndUpdate(
     { [key]: req.query[key] }, // Valor buscado
@@ -67,7 +67,7 @@ router.patch('/update', (req, res, next) => {
 });
 
 // Delete by id
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id', (req, res) => {
   Origin.deleteOne(
     { _id: req.params.id },
 
