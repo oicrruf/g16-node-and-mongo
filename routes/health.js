@@ -4,7 +4,7 @@ const packageJSN = require('../package.json');
 const router = express.Router();
 
 /* GET home page. */
-router.get('/health', (res) => {
+router.get('/health', (req, res) => {
   const { name, version } = packageJSN;
   res.send({
     name,

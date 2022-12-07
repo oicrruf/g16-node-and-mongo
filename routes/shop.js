@@ -28,7 +28,7 @@ router.post('/', validationsShop, (req, res) => {
 router.get('/:id', (req, res) => {
   Shop.findById({ _id: req.params.id }, (err, docs) => {
     if (err) {
-      console.log(err);
+      throw err;
     } else {
       res.status(200).send({ data: docs });
     }
@@ -39,7 +39,7 @@ router.get('/:id', (req, res) => {
 router.get('/find', (req, res) => {
   Shop.find({ name: req.query.name }, (err, docs) => {
     if (err) {
-      console.log(err);
+      throw err;
     } else {
       res.status(200).send({ data: docs });
     }
@@ -47,10 +47,10 @@ router.get('/find', (req, res) => {
 });
 
 // Find all
-router.get('/find/all', (res) => {
+router.get('/find/all', (req, res) => {
   Shop.find({}, (err, docs) => {
     if (err) {
-      console.log(err);
+      throw err;
     } else {
       res.status(200).send({ data: docs });
     }
@@ -65,7 +65,7 @@ router.patch('/update', (req, res) => {
     { [key]: req.body.value }, // Nuevo valor
     (err, docs) => {
       if (err) {
-        console.log(err);
+        throw err;
       } else {
         res.status(200).send({ data: docs });
       }
@@ -80,7 +80,7 @@ router.delete('/:id', (req, res) => {
 
     (err, docs) => {
       if (err) {
-        console.log(err);
+        throw err;
       } else {
         res.status(200).send({ data: docs });
       }

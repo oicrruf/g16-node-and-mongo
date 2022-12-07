@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const express = require('express');
 
 const router = express.Router();
@@ -36,7 +37,7 @@ router.get('/:id', (req, res) => {
 router.get('/find', validationsFindByNamePurchaseReason, (req, res) => {
   PurchaseReason.find({ name: req.query.name }, (err, docs) => {
     if (err) {
-      console.log(err);
+      throw err;
     } else {
       res.status(200).send({ data: docs });
     }
@@ -44,10 +45,10 @@ router.get('/find', validationsFindByNamePurchaseReason, (req, res) => {
 });
 
 // Find all
-router.get('/find/all', (res) => {
+router.get('/find/all', (req, res) => {
   PurchaseReason.find({}, (err, docs) => {
     if (err) {
-      console.log(err);
+      throw err;
     } else {
       res.status(200).send({ data: docs });
     }
@@ -62,7 +63,7 @@ router.patch('/update', (req, res) => {
     { [key]: req.body.value }, // Nuevo valor
     (err, docs) => {
       if (err) {
-        console.log(err);
+        throw err;
       } else {
         res.status(200).send({ data: docs });
       }
@@ -77,7 +78,7 @@ router.delete('/:id', (req, res) => {
 
     (err, docs) => {
       if (err) {
-        console.log(err);
+        throw err;
       } else {
         res.status(200).send({ data: docs });
       }

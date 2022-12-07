@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const yup = require('yup');
 
 const phoneRegExp =
