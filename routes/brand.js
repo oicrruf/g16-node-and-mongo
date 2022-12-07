@@ -1,4 +1,5 @@
 const express = require('express');
+
 const router = express.Router();
 const {
   validationsCreateBrand,
@@ -8,8 +9,8 @@ const {
 const { Brand } = require('../model');
 
 // Create
-router.post('/', validationsCreateBrand, function (req, res, next) {
-  let brand = new Brand();
+router.post('/', validationsCreateBrand, (req, res, next) => {
+  const brand = new Brand();
   brand.name = req.body.name;
 
   Brand.save((error, brandStored) => {
@@ -21,8 +22,8 @@ router.post('/', validationsCreateBrand, function (req, res, next) {
 });
 
 // Find by id
-router.get('/:id', function (req, res, next) {
-  Brand.findById({ _id: req.params.id }, function (err, docs) {
+router.get('/:id', (req, res, next) => {
+  Brand.findById({ _id: req.params.id }, (err, docs) => {
     if (err) {
       res.status(404).send({ name: err.name, message: err.message });
     } else {
@@ -32,8 +33,8 @@ router.get('/:id', function (req, res, next) {
 });
 
 // Find by name
-router.get('/find', validationsFindByNameBrand, function (req, res, next) {
-  Brand.find({ name: req.query.name }, function (err, docs) {
+router.get('/find', validationsFindByNameBrand, (req, res, next) => {
+  Brand.find({ name: req.query.name }, (err, docs) => {
     if (err) {
       console.log(err);
     } else {
@@ -43,8 +44,8 @@ router.get('/find', validationsFindByNameBrand, function (req, res, next) {
 });
 
 // Find all
-router.get('/find/all', function (req, res, next) {
-  Brand.find({}, function (err, docs) {
+router.get('/find/all', (req, res, next) => {
+  Brand.find({}, (err, docs) => {
     if (err) {
       console.log(err);
     } else {
@@ -54,12 +55,12 @@ router.get('/find/all', function (req, res, next) {
 });
 
 // Update
-router.patch('/update', function (req, res, next) {
-  let key = Object.keys(req.query)[0];
+router.patch('/update', (req, res, next) => {
+  const key = Object.keys(req.query)[0];
   Brand.findOneAndUpdate(
     { [key]: req.query[key] }, // Valor buscado
     { [key]: req.body.value }, // Nuevo valor
-    function (err, docs) {
+    (err, docs) => {
       if (err) {
         console.log(err);
       } else {
@@ -70,11 +71,11 @@ router.patch('/update', function (req, res, next) {
 });
 
 // Delete by id
-router.delete('/:id', function (req, res, next) {
+router.delete('/:id', (req, res, next) => {
   Brand.deleteOne(
     { _id: req.params.id },
 
-    function (err, docs) {
+    (err, docs) => {
       if (err) {
         console.log(err);
       } else {

@@ -1,4 +1,5 @@
 const express = require('express');
+
 const router = express.Router();
 const {
   validationsCreateProduct,
@@ -8,8 +9,8 @@ const {
 const { Product } = require('../model');
 
 // Create
-router.post('/', validationsCreateProduct, function (req, res, next) {
-  let product = new Product();
+router.post('/', validationsCreateProduct, (req, res, next) => {
+  const product = new Product();
   product.name = req.body.name;
   product.brand = req.body.brand;
   product.price = req.body.price;
@@ -36,8 +37,8 @@ router.post('/', validationsCreateProduct, function (req, res, next) {
 });
 
 // Find by id
-router.get('/:id', function (req, res, next) {
-  Product.findById({ _id: req.params.id }, function (err, docs) {
+router.get('/:id', (req, res, next) => {
+  Product.findById({ _id: req.params.id }, (err, docs) => {
     if (err) {
       res.status(404).send({ name: err.name, message: err.message });
     } else {
@@ -47,8 +48,8 @@ router.get('/:id', function (req, res, next) {
 });
 
 // Find by name
-router.get('/find', validationsFindByNameProduct, function (req, res, next) {
-  Product.find({ name: req.query.name }, function (err, docs) {
+router.get('/find', validationsFindByNameProduct, (req, res, next) => {
+  Product.find({ name: req.query.name }, (err, docs) => {
     if (err) {
       console.log(err);
     } else {
@@ -58,8 +59,8 @@ router.get('/find', validationsFindByNameProduct, function (req, res, next) {
 });
 
 // Find all
-router.get('/find/all', function (req, res, next) {
-  Product.find({}, function (err, docs) {
+router.get('/find/all', (req, res, next) => {
+  Product.find({}, (err, docs) => {
     if (err) {
       console.log(err);
     } else {
@@ -69,12 +70,12 @@ router.get('/find/all', function (req, res, next) {
 });
 
 // Update
-router.patch('/update', function (req, res, next) {
-  let key = Object.keys(req.query)[0];
+router.patch('/update', (req, res, next) => {
+  const key = Object.keys(req.query)[0];
   Product.findOneAndUpdate(
     { [key]: req.query[key] }, // Valor buscado
     { [key]: req.body.value }, // Nuevo valor
-    function (err, docs) {
+    (err, docs) => {
       if (err) {
         console.log(err);
       } else {
@@ -85,11 +86,11 @@ router.patch('/update', function (req, res, next) {
 });
 
 // Delete by id
-router.delete('/:id', function (req, res, next) {
+router.delete('/:id', (req, res, next) => {
   Product.deleteOne(
     { _id: req.params.id },
 
-    function (err, docs) {
+    (err, docs) => {
       if (err) {
         console.log(err);
       } else {

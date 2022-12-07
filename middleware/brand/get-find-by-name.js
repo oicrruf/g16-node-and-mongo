@@ -14,7 +14,7 @@ const validationsFindByNameBrand = (req, res, next) => {
     .validate({
       name,
     })
-    .then(function (valid) {
+    .then((valid) => {
       isValid = valid;
     })
     .catch((err) => {

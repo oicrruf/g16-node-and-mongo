@@ -1,11 +1,12 @@
 const express = require('express');
+
 const router = express.Router();
 const { validationsShop } = require('../middleware/shop');
 const { Shop } = require('../model');
 
 // Create
-router.post('/', validationsShop, function (req, res, next) {
-  let shop = new Shop();
+router.post('/', validationsShop, (req, res, next) => {
+  const shop = new Shop();
   shop.name = req.body.name;
   shop.description = req.body.description;
   shop.invoice_url = req.body.invoice_url;
@@ -19,13 +20,13 @@ router.post('/', validationsShop, function (req, res, next) {
       res.status(500).send({ message: error });
     }
 
-    res.status(201).send({ ['shop']: shopStored });
+    res.status(201).send({ shop: shopStored });
   });
 });
 
 // Find by id
-router.get('/:id', function (req, res, next) {
-  Shop.findById({ _id: req.params.id }, function (err, docs) {
+router.get('/:id', (req, res, next) => {
+  Shop.findById({ _id: req.params.id }, (err, docs) => {
     if (err) {
       console.log(err);
     } else {
@@ -35,8 +36,8 @@ router.get('/:id', function (req, res, next) {
 });
 
 // Find by name
-router.get('/find', function (req, res, next) {
-  Shop.find({ name: req.query.name }, function (err, docs) {
+router.get('/find', (req, res, next) => {
+  Shop.find({ name: req.query.name }, (err, docs) => {
     if (err) {
       console.log(err);
     } else {
@@ -46,8 +47,8 @@ router.get('/find', function (req, res, next) {
 });
 
 // Find all
-router.get('/find/all', function (req, res, next) {
-  Shop.find({}, function (err, docs) {
+router.get('/find/all', (req, res, next) => {
+  Shop.find({}, (err, docs) => {
     if (err) {
       console.log(err);
     } else {
@@ -57,12 +58,12 @@ router.get('/find/all', function (req, res, next) {
 });
 
 // Update
-router.patch('/update', function (req, res, next) {
-  let key = Object.keys(req.query)[0];
+router.patch('/update', (req, res, next) => {
+  const key = Object.keys(req.query)[0];
   Shop.findOneAndUpdate(
     { [key]: req.query[key] }, // Valor buscado
     { [key]: req.body.value }, // Nuevo valor
-    function (err, docs) {
+    (err, docs) => {
       if (err) {
         console.log(err);
       } else {
@@ -73,11 +74,11 @@ router.patch('/update', function (req, res, next) {
 });
 
 // Delete by id
-router.delete('/:id', function (req, res, next) {
+router.delete('/:id', (req, res, next) => {
   Shop.deleteOne(
     { _id: req.params.id },
 
-    function (err, docs) {
+    (err, docs) => {
       if (err) {
         console.log(err);
       } else {

@@ -66,7 +66,7 @@ const validationsCreateProduct = (req, res, next) => {
       in_sale,
       sale_date,
     })
-    .then(function (valid) {
+    .then((valid) => {
       isValid = valid;
     })
     .catch((err) => {

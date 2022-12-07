@@ -1,24 +1,25 @@
 const express = require('express');
+
 const router = express.Router();
 const { validationsOrigin } = require('../middleware/origin');
 const { Origin } = require('../model');
 
 // Create
-router.post('/', validationsOrigin, function (req, res, next) {
-  let origin = new Origin();
+router.post('/', validationsOrigin, (req, res, next) => {
+  const origin = new Origin();
   origin.name = req.body.name;
 
   origin.save((error, originStored) => {
     if (error) {
       res.status(500).send({ message: error });
     }
-    res.status(201).send({ ['origin']: originStored });
+    res.status(201).send({ origin: originStored });
   });
 });
 
 // Find by id
-router.get('/:id', function (req, res, next) {
-  Origin.findById({ _id: req.params.id }, function (err, docs) {
+router.get('/:id', (req, res, next) => {
+  Origin.findById({ _id: req.params.id }, (err, docs) => {
     if (err) {
       console.log(err);
     } else {
@@ -28,8 +29,8 @@ router.get('/:id', function (req, res, next) {
 });
 
 // Find by name
-router.get('/find', function (req, res, next) {
-  Origin.find({ name: req.query.name }, function (err, docs) {
+router.get('/find', (req, res, next) => {
+  Origin.find({ name: req.query.name }, (err, docs) => {
     if (err) {
       console.log(err);
     } else {
@@ -39,8 +40,8 @@ router.get('/find', function (req, res, next) {
 });
 
 // Find all
-router.get('/find/all', function (req, res, next) {
-  Origin.find({}, function (err, docs) {
+router.get('/find/all', (req, res, next) => {
+  Origin.find({}, (err, docs) => {
     if (err) {
       console.log(err);
     } else {
@@ -50,12 +51,12 @@ router.get('/find/all', function (req, res, next) {
 });
 
 // Update
-router.patch('/update', function (req, res, next) {
-  let key = Object.keys(req.query)[0];
+router.patch('/update', (req, res, next) => {
+  const key = Object.keys(req.query)[0];
   Origin.findOneAndUpdate(
     { [key]: req.query[key] }, // Valor buscado
     { [key]: req.body.value }, // Nuevo valor
-    function (err, docs) {
+    (err, docs) => {
       if (err) {
         console.log(err);
       } else {
@@ -66,11 +67,11 @@ router.patch('/update', function (req, res, next) {
 });
 
 // Delete by id
-router.delete('/:id', function (req, res, next) {
+router.delete('/:id', (req, res, next) => {
   Origin.deleteOne(
     { _id: req.params.id },
 
-    function (err, docs) {
+    (err, docs) => {
       if (err) {
         console.log(err);
       } else {

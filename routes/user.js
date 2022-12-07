@@ -1,11 +1,12 @@
 const express = require('express');
+
 const router = express.Router();
 const { validationsUser } = require('../middleware/user');
 const { User } = require('../model');
 
 // Create
-router.post('/', validationsUser, function (req, res, next) {
-  let user = new User();
+router.post('/', validationsUser, (req, res) => {
+  const user = new User();
   user.first_name = req.body.first_name;
   user.last_name = req.body.last_name;
   user.email = req.body.email;
@@ -17,15 +18,15 @@ router.post('/', validationsUser, function (req, res, next) {
       res.status(500).send({ message: error });
     }
 
-    res.status(201).send({ ['user']: userStored });
+    res.status(201).send({ user: userStored });
   });
 });
 
 // Find by id
-router.get('/:id', function (req, res, next) {
-  User.findById({ _id: req.params.id }, function (err, docs) {
+router.get('/:id', (req, res) => {
+  User.findById({ _id: req.params.id }, (err, docs) => {
     if (err) {
-      console.log(err);
+      throw err;
     } else {
       res.status(200).send({ data: docs });
     }
@@ -33,10 +34,10 @@ router.get('/:id', function (req, res, next) {
 });
 
 // Find by name
-router.get('/find', function (req, res, next) {
-  User.find({ name: req.query.name }, function (err, docs) {
+router.get('/find', (req, res) => {
+  User.find({ name: req.query.name }, (err, docs) => {
     if (err) {
-      console.log(err);
+      throw err;
     } else {
       res.status(200).send({ data: docs });
     }
@@ -44,10 +45,10 @@ router.get('/find', function (req, res, next) {
 });
 
 // Find all
-router.get('/find/all', function (req, res, next) {
-  User.find({}, function (err, docs) {
+router.get('/find/all', (req, res) => {
+  User.find({}, (err, docs) => {
     if (err) {
-      console.log(err);
+      throw err;
     } else {
       res.status(200).send({ data: docs });
     }
@@ -55,14 +56,14 @@ router.get('/find/all', function (req, res, next) {
 });
 
 // Update
-router.patch('/update', function (req, res, next) {
-  let key = Object.keys(req.query)[0];
+router.patch('/update', (req, res) => {
+  const key = Object.keys(req.query)[0];
   User.findOneAndUpdate(
     { [key]: req.query[key] }, // Valor buscado
     { [key]: req.body.value }, // Nuevo valor
-    function (err, docs) {
+    (err, docs) => {
       if (err) {
-        console.log(err);
+        throw err;
       } else {
         res.status(200).send({ data: docs });
       }
@@ -71,13 +72,13 @@ router.patch('/update', function (req, res, next) {
 });
 
 // Delete by id
-router.delete('/:id', function (req, res, next) {
+router.delete('/:id', (req, res) => {
   User.deleteOne(
     { _id: req.params.id },
 
-    function (err, docs) {
+    (err, docs) => {
       if (err) {
-        console.log(err);
+        throw err;
       } else {
         res.status(200).send({ data: docs });
       }

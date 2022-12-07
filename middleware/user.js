@@ -31,7 +31,7 @@ const validationsUser = (req, res, next) => {
       password,
       gender,
     })
-    .then(function (valid) {
+    .then((valid) => {
       isValid = valid;
     })
     .catch((err) => {
