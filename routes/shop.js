@@ -3,27 +3,7 @@ const router = express.Router()
 const { validationsShop } = require('../middleware/shop')
 const { Shop } = require("../model");
 
-router.get("/find", function (req, res, next) {
-  Shop.find({ name: req.query.name }, function (err, docs) {
-    if (err) {
-      console.log(err);
-    } else {
-      res.status(200).send({ data: docs });
-    }
-  });
-});
-
-router.get("/:id", function (req, res, next) {
-  Shop.findById({ _id: req.params.id }, function (err, docs) {
-    if (err) {
-      console.log(err);
-    } else {
-      res.status(200).send({ data: docs });
-    }
-  });
-});
-
-// shop/create
+// Create
 router.post("/", validationsShop, function (req, res, next) {
   let shop = new Shop()
   shop.name = req.body.name
@@ -42,5 +22,69 @@ router.post("/", validationsShop, function (req, res, next) {
     res.status(201).send({ ["shop"]: shopStored})
   })
 })
+
+// Find by id
+router.get("/:id", function (req, res, next) {
+  Shop.findById({ _id: req.params.id }, function (err, docs) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.status(200).send({ data: docs });
+    }
+  });
+});
+
+// Find by name
+router.get("/find", function (req, res, next) {
+  Shop.find({ name: req.query.name }, function (err, docs) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.status(200).send({ data: docs });
+    }
+  });
+});
+
+// Find all
+router.get("/find/all", function (req, res, next) {
+  Shop.find({}, function (err, docs) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.status(200).send({ data: docs });
+    }
+  });
+});
+
+// Update
+router.patch("/update", function (req, res, next) {
+  let key = Object.keys(req.query)[0];
+  Shop.findOneAndUpdate(
+    { [key]: req.query[key] }, // Valor buscado
+    { [key]: req.body.value }, // Nuevo valor
+    function (err, docs) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.status(200).send({ data: docs });
+      }
+    }
+  );
+});
+
+// Delete by id 
+router.delete("/:id", function (req, res, next) {
+  Shop.deleteOne(
+    { _id: req.params.id },
+
+    function (err, docs) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.status(200).send({ data: docs });
+      }
+    }
+  );
+});
 
 module.exports = router
