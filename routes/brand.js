@@ -9,7 +9,7 @@ const {
 const { Brand } = require('../model');
 
 // Create
-router.post('/', validationsCreateBrand, (req, res, next) => {
+router.post('/', validationsCreateBrand, (req, res) => {
   const brand = new Brand();
   brand.name = req.body.name;
 
@@ -22,7 +22,7 @@ router.post('/', validationsCreateBrand, (req, res, next) => {
 });
 
 // Find by id
-router.get('/:id', (req, res, next) => {
+router.get('/:id', (req, res) => {
   Brand.findById({ _id: req.params.id }, (err, docs) => {
     if (err) {
       res.status(404).send({ name: err.name, message: err.message });
@@ -33,10 +33,10 @@ router.get('/:id', (req, res, next) => {
 });
 
 // Find by name
-router.get('/find', validationsFindByNameBrand, (req, res, next) => {
+router.get('/find', validationsFindByNameBrand, (req, res) => {
   Brand.find({ name: req.query.name }, (err, docs) => {
     if (err) {
-      console.log(err);
+      throw err;
     } else {
       res.status(200).send({ data: docs });
     }
@@ -44,10 +44,10 @@ router.get('/find', validationsFindByNameBrand, (req, res, next) => {
 });
 
 // Find all
-router.get('/find/all', (req, res, next) => {
+router.get('/find/all', (req, res) => {
   Brand.find({}, (err, docs) => {
     if (err) {
-      console.log(err);
+      throw err;
     } else {
       res.status(200).send({ data: docs });
     }
@@ -55,14 +55,14 @@ router.get('/find/all', (req, res, next) => {
 });
 
 // Update
-router.patch('/update', (req, res, next) => {
+router.patch('/update', (req, res) => {
   const key = Object.keys(req.query)[0];
   Brand.findOneAndUpdate(
     { [key]: req.query[key] }, // Valor buscado
     { [key]: req.body.value }, // Nuevo valor
     (err, docs) => {
       if (err) {
-        console.log(err);
+        throw err;
       } else {
         res.status(200).send({ data: docs });
       }
@@ -71,13 +71,13 @@ router.patch('/update', (req, res, next) => {
 });
 
 // Delete by id
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id', (req, res) => {
   Brand.deleteOne(
     { _id: req.params.id },
 
     (err, docs) => {
       if (err) {
-        console.log(err);
+        throw err;
       } else {
         res.status(200).send({ data: docs });
       }

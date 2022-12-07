@@ -9,7 +9,7 @@ const {
 const { Product } = require('../model');
 
 // Create
-router.post('/', validationsCreateProduct, (req, res, next) => {
+router.post('/', validationsCreateProduct, (req, res) => {
   const product = new Product();
   product.name = req.body.name;
   product.brand = req.body.brand;
@@ -37,7 +37,7 @@ router.post('/', validationsCreateProduct, (req, res, next) => {
 });
 
 // Find by id
-router.get('/:id', (req, res, next) => {
+router.get('/:id', (req, res) => {
   Product.findById({ _id: req.params.id }, (err, docs) => {
     if (err) {
       res.status(404).send({ name: err.name, message: err.message });
@@ -48,10 +48,10 @@ router.get('/:id', (req, res, next) => {
 });
 
 // Find by name
-router.get('/find', validationsFindByNameProduct, (req, res, next) => {
+router.get('/find', validationsFindByNameProduct, (req, res) => {
   Product.find({ name: req.query.name }, (err, docs) => {
     if (err) {
-      console.log(err);
+      throw err;
     } else {
       res.status(200).send({ data: docs });
     }
@@ -59,10 +59,10 @@ router.get('/find', validationsFindByNameProduct, (req, res, next) => {
 });
 
 // Find all
-router.get('/find/all', (req, res, next) => {
+router.get('/find/all', (req, res) => {
   Product.find({}, (err, docs) => {
     if (err) {
-      console.log(err);
+      throw err;
     } else {
       res.status(200).send({ data: docs });
     }
@@ -70,14 +70,14 @@ router.get('/find/all', (req, res, next) => {
 });
 
 // Update
-router.patch('/update', (req, res, next) => {
+router.patch('/update', (req, res) => {
   const key = Object.keys(req.query)[0];
   Product.findOneAndUpdate(
     { [key]: req.query[key] }, // Valor buscado
     { [key]: req.body.value }, // Nuevo valor
     (err, docs) => {
       if (err) {
-        console.log(err);
+        throw err;
       } else {
         res.status(200).send({ data: docs });
       }
@@ -86,13 +86,13 @@ router.patch('/update', (req, res, next) => {
 });
 
 // Delete by id
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id', (req, res) => {
   Product.deleteOne(
     { _id: req.params.id },
 
     (err, docs) => {
       if (err) {
-        console.log(err);
+        throw err;
       } else {
         res.status(200).send({ data: docs });
       }
