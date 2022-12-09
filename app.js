@@ -14,7 +14,7 @@ const {
   product,
   shop,
   user,
-} = require('./routes');
+} = require('./src/routes');
 
 require('dotenv').config();
 

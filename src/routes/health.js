@@ -1,5 +1,5 @@
 const express = require('express');
-const packageJSN = require('../package.json');
+const packageJSN = require('../../package.json');
 
 const router = express.Router();
 
