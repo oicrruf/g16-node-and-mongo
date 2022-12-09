@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.1](https://github.com/oicrruf/g16-node-and-mongo/compare/v0.0.0...v0.0.1) (2022-12-09)
+
+
+### Features
+
+* add domain name in health route ([da45ca3](https://github.com/oicrruf/g16-node-and-mongo/commit/da45ca337a4f560b67fc50898b3fdb835e8d4a74))
+
 ## 0.0.0 (2022-12-09)
 
 
