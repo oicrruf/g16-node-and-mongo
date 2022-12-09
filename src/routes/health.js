@@ -9,6 +9,7 @@ router.get('/health', (req, res) => {
   res.send({
     name,
     version,
+    domain: 'localhost',
   });
 });
 
