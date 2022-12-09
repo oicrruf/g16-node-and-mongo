@@ -6,7 +6,8 @@
     "start": "node ./bin/www",
     "start:dev": "nodemon ./bin/www",
     "sync": "npx sync-dotenv",
-    "prepare": "husky install"
+    "prepare": "husky install", 
+    "release": "standard-version"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -16,9 +17,12 @@
     "http-errors": "~1.6.3",
     "mongoose": "^6.7.3",
     "morgan": "~1.9.1",
+    "standard-version": "^9.5.0",
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.3.0",
+    "@commitlint/config-conventional": "^17.3.0",
     "eslint": "^8.29.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.5.0",
