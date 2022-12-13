@@ -5,6 +5,7 @@ const product = require('./product');
 const purchaseReason = require('./purchase-reason');
 const shop = require('./shop');
 const user = require('./user');
+const auth = require('./auth');
 
 module.exports = {
   health,
@@ -14,4 +15,5 @@ module.exports = {
   purchaseReason,
   shop,
   user,
+  auth,
 };
