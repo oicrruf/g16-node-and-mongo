@@ -29,7 +29,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public')));
 
 mongoose
   .connect(process.env.URI)
@@ -47,12 +47,6 @@ app.use('/api/v1/shop', shop);
 app.use('/api/v1/user', user);
 app.use('/api/v1', auth);
 app.use('/api/v1', privateRoutes);
-
-app.use(
-  '/user',
-  passport.authenticate('jwt', { session: false }),
-  privateRoutes
-);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
