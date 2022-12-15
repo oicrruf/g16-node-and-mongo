@@ -28,8 +28,8 @@ const validationsCreateProduct = (req, res, next) => {
     name: yup.string().required().strict(),
     brand: yup.string().required().strict(),
     price: yup.number().required().positive(),
-    purchase_date: yup.date().required(),
-    purchase_reason: yup.string().required().strict(),
+    purchaseDate: yup.date().required(),
+    purchaseReason: yup.string().required().strict(),
     origin: yup
       .string()
       .lowercase()
@@ -40,12 +40,12 @@ const validationsCreateProduct = (req, res, next) => {
     status: yup.string().required().strict(),
     lifespan: yup.number().required().positive(),
     depreciation: yup.number().required().positive(),
-    depreciation_value: yup.number().required().positive(),
+    depreciationValue: yup.number().required().positive(),
     maintenance: yup.number().required().positive(),
     warranty: yup.number().required().positive(),
     score: yup.number().required().min(1).max(5),
-    in_sale: yup.boolean().required(),
-    sale_date: yup.date(),
+    inSale: yup.boolean().required(),
+    saleDate: yup.date(),
   });
 
   schema
